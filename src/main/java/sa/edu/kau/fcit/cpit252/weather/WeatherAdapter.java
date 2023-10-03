@@ -8,5 +8,29 @@ import sa.edu.kau.fcit.cpit252.geoLocation.Location;
  * The adapter is a class used as an intermediary between the client and the adaptee.
  *
  */
-public class WeatherAdapter {
+
+/*
+we shouldn't be referencing the concrete implementation
+ */
+
+public class WeatherAdapter implements WeatherCity{
+
+    //We should create an instance variable of type weatherGEO
+    private WeatherGeo weatherGeo;
+    private GeoLocationService geoLocationService;
+
+    //Lets write our constructor that will take WeatherGeo
+    public WeatherAdapter(WeatherGeo weatherGeo){
+        this.weatherGeo = weatherGeo;
+        this.geoLocationService = new GeoLocationService();
+    }
+
+    //we will override
+    public WeatherInfo getWeatherInfo(String cityName){
+        Location geoLocation = this.geoLocationService.search(cityName);
+        WeatherInfo weatherInfo = this.weatherGeo.getWeatherInfo(geoLocation.getLatitude(), geoLocation.getLongitude());
+        weatherInfo.setCity(cityName);
+        return weatherInfo;
+
+    }
 }

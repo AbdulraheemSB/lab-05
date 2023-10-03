@@ -11,11 +11,11 @@ import sa.edu.kau.fcit.cpit252.weather.WeatherInfo;
 public class App {
     public static void main(String[] args) {
         // Get the weather for Jeddah (21.543333, 39.172778)
-        OpenMeteoWeather openMeteoWeather = new OpenMeteoWeather();
-        GeoLocationService geoLocationService = new GeoLocationService();
-        Location location = geoLocationService.search("Jeddah");
-        WeatherInfo weatherInfo = openMeteoWeather.getWeatherInfo(location.getLatitude(),
-                location.getLongitude());
+
+        WeatherGeo weatherGeo = new OpenMeteoWeather();
+        WeatherCity weatherCityAdapter = new WeatherAdapter(weatherGeo);
+        WeatherInfo weatherInfo = weatherCityAdapter.getWeatherInfo("Jeddah");
         System.out.println(weatherInfo);
+
     }
 }
